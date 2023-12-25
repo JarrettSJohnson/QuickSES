@@ -122,6 +122,32 @@ struct is_notempty
     }
 };
 
+struct is_empty_cell
+{
+    __host__ __device__
+    bool operator()(const int2 &a) const
+    {
+        return a.x == EMPTYCELL && a.y == EMPTYCELL;
+    }
+};
+
+struct is_not_empty_cell
+{
+    __host__ __device__
+    bool operator()(const int2 &a) const
+    {
+        return a.x != EMPTYCELL || a.y != EMPTYCELL;
+    }
+};
+
+struct is_less_than_x
+{
+    __host__ __device__
+    bool operator()(const float &a) const
+    {
+        return a < 0.5f;
+    }
+};
 
 __global__ void memsetCudaFloat(float *data, float val, int N){
     unsigned int index = blockDim.x * blockIdx.x + threadIdx.x;
